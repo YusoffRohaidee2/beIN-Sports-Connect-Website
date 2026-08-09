@@ -15,13 +15,6 @@ Access the live site through any of the following mirrors:
 * **Netlify**: `https://<your-site-name>.netlify.app`
 * **Vercel**: `https://<your-site-name>.vercel.app`
 
-*(Replace the placeholders above with your actual deployed links)*
-
-## 🚀 How to Use
-* Download or clone this repository.
-* Open the `index.html` file using any web browser (Chrome, Safari, Edge, Firefox, etc.).
-* Select a channel from the directory list to start watching live.
-
 ## 🛠️ Built With
 * **HTML5 & CSS3**: For page structure, styling, and layout.
 * **JavaScript**: For channel switching and custom autoplay logic.
