@@ -2,24 +2,27 @@
 
 beIN Sports Coverage from around the world here!
 
-## Features
-* **Modern UI/UX**: Dark-themed interface with responsive side directory and player controls.
-* **HLS Streaming Support**: Integrated `HLS.js` library for live stream loading and playback.
-* **Smart Autoplay**: Configured with fallback mechanisms to ensure playback across strict browser autoplay policies.
-* **Mobile Responsive**: Adaptive layout for both desktop and mobile viewing.
+## 📺 Key Features
+* **Wide Channel Selection**: Includes beIN Sports Arabic (Server 1 & 2) and beIN Sports France (1 - 3).
+* **Instant Autoplay**: Simply click on any channel name and the stream plays automatically—no need to hit the play button.
+* **Modern & Sleek UI**: Features an eye-friendly dark mode design that is easy to navigate.
+* **Fully Responsive**: Works smoothly on desktops, tablets, and mobile devices.
 
-## Channels Included
-* **beIN Sports Arabic**: Main streams (Channels 1 - 9)
-* **beIN Sports Arabic (Server 2)**: Backup streams (Channels 1 - 6)
-* **beIN Sports France**: French coverage (beIN Sports France 1 - 3)
+## 🔗 Live Demo Links
+Access the live site through any of the following mirrors:
 
-## Tech Stack
-* **HTML5**: Native media player element setup
-* **CSS3**: Custom variables, glassmorphism UI, flexbox layout, and CSS animations
-* **JavaScript (ES6+)**: Stream switcher logic and autoplay handling
-* **HLS.js**: HTTP Live Streaming (HLS) client support
+* **GitHub Pages**: `https://<your-username>.github.io/<your-repo-name>/`
+* **Netlify**: `https://<your-site-name>.netlify.app`
+* **Vercel**: `https://<your-site-name>.vercel.app`
 
-## How to Run
-* Download or clone the repository to your local machine.
-* Open `index.html` in any web browser.
-* Host directly on services like **GitHub Pages**, **Vercel**, or **Netlify**.
+*(Replace the placeholders above with your actual deployed links)*
+
+## 🚀 How to Use
+* Download or clone this repository.
+* Open the `index.html` file using any web browser (Chrome, Safari, Edge, Firefox, etc.).
+* Select a channel from the directory list to start watching live.
+
+## 🛠️ Built With
+* **HTML5 & CSS3**: For page structure, styling, and layout.
+* **JavaScript**: For channel switching and custom autoplay logic.
+* **HLS.js**: For live stream handling and video playback.
