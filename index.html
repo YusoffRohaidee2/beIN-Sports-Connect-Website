@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>beIN SPORTS CONNECT by Sports Hub Official</title>
+  <link rel="icon" type="image/png" href="https://play-lh.googleusercontent.com/leGZnOjI3z8w5acn2QJMsa9xi2pOhNZCAmYefnBZ59nxvL_Ipc-qqbTUzhsHZkKhwepSxQ4A5OizBZN3y3nb">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- HLS.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+  <style>
+    :root {
+      --bg-dark: #09080d;
+      --bg-card: #13111a;
+      --bg-card-hover: #1c1827;
+      --bg-active: #2a1b4e;
+      --border-color: rgba(255, 255, 255, 0.07);
+      --accent-purple: #8b3dff;
+      --accent-purple-glow: rgba(139, 61, 255, 0.4);
+      --accent-gradient: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+      --text-main: #f3f4f6;
+      --text-sub: #9ca3af;
+      --live-red: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(139, 61, 255, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(99, 102, 241, 0.05) 0%, transparent 40%);
+    }
+
+    /* HEADER STYLING */
+    header {
+      background: rgba(15, 13, 22, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+      flex-shrink: 0;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-container img {
+      height: 42px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+      transition: transform 0.3s ease;
+    }
+
+    .logo-container img:hover {
+      transform: scale(1.03);
+    }
+
+    .brand-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+    }
+
+    .brand-badge .dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #10b981;
+    }
+
+    .site-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .live-tag {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .live-tag::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background-color: var(--live-red);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* MAIN LAYOUT */
+    .main-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* SIDEBAR / DIRECTORY */
+    .sidebar {
+      width: 350px;
+      background: rgba(13, 11, 18, 0.6);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+
+    .sidebar-header {
+      padding: 20px 22px 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-header h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #fff;
+    }
+
+    .channel-count {
+      font-size: 0.75rem;
+      background: rgba(139, 61, 255, 0.2);
+      color: #c084fc;
+      border: 1px solid rgba(139, 61, 255, 0.3);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .channel-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 18px 20px 18px;
+    }
+
+    .channel-list::-webkit-scrollbar {
+      width: 5px;
+    }
+    .channel-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .channel-list::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+    .channel-list::-webkit-scrollbar-thumb:hover {
+      background: rgba(139, 61, 255, 0.4);
+    }
+
+    .section-divider {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin: 20px 0 10px 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .section-divider:first-child {
+      margin-top: 5px;
+    }
+
+    .channel-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .channel-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .channel-item:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(139, 61, 255, 0.3);
+      transform: translateX(4px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .channel-item.active {
+      background: var(--bg-active);
+      border-color: rgba(168, 85, 247, 0.5);
+      box-shadow: 0 0 25px rgba(139, 61, 255, 0.25);
+    }
+
+    .channel-item.active::before {
+      opacity: 1;
+    }
+
+    .logo-box {
+      width: 52px;
+      height: 38px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      flex-shrink: 0;
+    }
+
+    .channel-item img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+
+    .channel-details {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow: hidden;
+    }
+
+    .channel-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .channel-quality {
+      font-size: 0.7rem;
+      color: var(--text-sub);
+      font-weight: 500;
+    }
+
+    /* PLAYER CONTAINER */
+    .content-area {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, rgba(30, 20, 50, 0.3) 0%, transparent 70%);
+    }
+
+    .player-card {
+      width: 100%;
+      max-width: 680px;
+      background: rgba(18, 15, 26, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(139, 61, 255, 0.15);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease;
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-top: 56.25%;
+      background: #000;
+    }
+
+    .video-wrapper video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      outline: none;
+    }
+
+    .player-info-bar {
+      padding: 14px 20px;
+      background: linear-gradient(180deg, rgba(24, 20, 36, 0.9) 0%, rgba(15, 12, 22, 0.95) 100%);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .info-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .now-playing-badge {
+      width: 10px;
+      height: 10px;
+      background: #a855f7;
+      border-radius: 50%;
+      box-shadow: 0 0 12px #a855f7;
+    }
+
+    .channel-title-display {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.3px;
+    }
+
+    .info-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-badge {
+      font-size: 0.7rem;
+      color: #34d399;
+      background: rgba(52, 211, 153, 0.1);
+      border: 1px solid rgba(52, 211, 153, 0.2);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    /* RECORD BUTTON STYLING */
+    .record-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #ef4444;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .record-btn:hover {
+      background: rgba(239, 68, 68, 0.3);
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+    }
+
+    .record-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #ef4444;
+      border-radius: 50%;
+    }
+
+    .record-btn.recording {
+      background: #ef4444;
+      color: #ffffff;
+    }
+
+    .record-btn.recording .record-dot {
+      background-color: #ffffff;
+      animation: pulse 1s infinite;
+    }
+
+    footer {
+      background: rgba(10, 8, 14, 0.9);
+      text-align: center;
+      padding: 12px;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      border-top: 1px solid var(--border-color);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        height: auto;
+        overflow: visible;
+      }
+      .main-layout {
+        flex-direction: column-reverse;
+      }
+      .sidebar {
+        width: 100%;
+        height: 450px;
+      }
+      .content-area {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-container">
+      <img src="https://unifi.com.my/tv/sites/default/files/2026-05/bsc-400.png" alt="beIN SPORTS CONNECT Logo">
+      <div class="brand-badge">
+        <span class="dot"></span>
+        <span class="site-title">Sports Hub Official</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="live-tag">ULTRA HD LIVE</div>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    <!-- SIDEBAR DIRECTORY -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h3>Channel Directory</h3>
+        <span class="channel-count">18 Channels</span>
+      </div>
+      <div class="channel-list">
+        
+        <!-- ARABIC MAIN -->
+        <div class="section-divider">beIN Sports Arabic</div>
+        
+        <div class="channel-item" onclick="playStream('https://main.light-ott.net/play/live.php?mac=A0:BB:3E:02:40:2B&stream=798772&extension=m3u8', 'beIN Sports 1 HD', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/Vtk2cGI.png" alt="beIN 1"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports 1</span>
+            <span class="channel-quality">1080p • Arabic</span>
+          </div>
+        </div>
+
+        <div class="channel-item" onclick="playStream('https://main.light-ott.net/play/live.php?mac=A0:BB:3E:02:40:2B&stream=798773&extension=m3u8', 'beIN Sports 2 HD', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/vUJZSvs.png" alt="beIN 2"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports 2</span>
+            <span class="channel-quality">1080p • Arabic</span>
+          </div>
+        </div>
+
+        <div class="channel-item" onclick="playStream('https://main.light-ott.net/play/live.php?mac=A0:BB:3E:02:40:2B&stream=798788&extension=m3u8', 'beIN Sports 3 HD', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/UYSMao3.png" alt="beIN 3"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports 3</span>
+            <span class="channel-quality">1080p • Arabic</span>
+          </div>
+        </div>
+
+        <div class="channel-item" onclick="playStream('https://main.light-ott.net/play/live.php?mac=A0:BB:3E:02:40:2B&stream=798789&extension=m3u8', 'beIN Sports 4 HD', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/vwAgJNi.png" alt="beIN 4"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports 4</span>
+            <span class="channel-quality">1080p • Arabic</span>
+          </div>
+        </div>
+
+        <div class="channel-item" onclick="playStream('https://main.light-ott.net/play/live.php?mac=A0:BB:3E:02:40:2B&stream=798790&extension=m3u8', 'beIN Sports 5 HD', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/2Rha5aY.png" alt="beIN 5"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports 5</span>
+            <span class="channel-quality">1080p • Arabic</span>
+          </div>
+        </div>
+
+        <div class="channel-item" onclick="playStream('https://main.light-ott.net/play/live.php?mac=A0:BB:3E:02:40:2B&stream=798791&extension=m3u8', 'beIN Sports 6 HD', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/0wBdLYb.png" alt="beIN 6"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports 6</span>
+            <span class="channel-quality">1080p • Arabic</span>
+          </div>
+        </div>
+
+        <div class="channel-item" onclick="playStream('https://main.light-ott.net/play/live.php?mac=A0:BB:3E:02:40:2B&stream=798792&extension=m3u8', 'beIN Sports 7 HD', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/iODFwZi.png" alt="beIN 7"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports 7</span>
+            <span class="channel-quality">1080p • Arabic</span>
+          </div>
+        </div>
+
+        <div class="channel-item" onclick="playStream('https://main.light-ott.net/play/live.php?mac=A0:BB:3E:02:40:2B&stream=798793&extension=m3u8', 'beIN Sports 8 HD', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/CaFEyVn.png" alt="beIN 8"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports 8</span>
+            <span class="channel-quality">1080p • Arabic</span>
+          </div>
+        </div>
+
+        <div class="channel-item" onclick="playStream('https://main.light-ott.net/play/live.php?mac=A0:BB:3E:02:40:2B&stream=798794&extension=m3u8', 'beIN Sports 9 HD', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/RLrMBlm.png" alt="beIN 9"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports 9</span>
+            <span class="channel-quality">1080p • Arabic</span>
+          </div>
+        </div>
+
+        <!-- ARABIC SERVER 2 -->
+        <div class="section-divider">beIN Sports Arabic (Server 2)</div>
+
+        <div class="channel-item" onclick="playStream('https://main.light-ott.net/play/live.php?mac=A0:BB:3E:02:40:2B&stream=798795&extension=m3u8', 'beIN Sports 1 HD (Server 2)', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/Vtk2cGI.png" alt="beIN 1 (2)"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports 1 (2)</span>
+            <span class="channel-quality">1080p • Backup</span>
+          </div>
+        </div>
+
+        <div class="channel-item" onclick="playStream('https://main.light-ott.net/play/live.php?mac=A0:BB:3E:02:40:2B&stream=798796&extension=m3u8', 'beIN Sports 2 HD (Server 2)', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/vUJZSvs.png" alt="beIN 2 (2)"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports 2 (2)</span>
+            <span class="channel-quality">1080p • Backup</span>
+          </div>
+        </div>
+
+        <div class="channel-item" onclick="playStream('https://main.light-ott.net/play/live.php?mac=A0:BB:3E:02:40:2B&stream=798797&extension=m3u8', 'beIN Sports 3 HD (Server 2)', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/UYSMao3.png" alt="beIN 3 (2)"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports 3 (2)</span>
+            <span class="channel-quality">1080p • Backup</span>
+          </div>
+        </div>
+
+        <div class="channel-item" onclick="playStream('https://main.light-ott.net/play/live.php?mac=A0:BB:3E:02:40:2B&stream=798798&extension=m3u8', 'beIN Sports 4 HD (Server 2)', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/vwAgJNi.png" alt="beIN 4 (2)"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports 4 (2)</span>
+            <span class="channel-quality">1080p • Backup</span>
+          </div>
+        </div>
+
+        <div class="channel-item" onclick="playStream('https://main.light-ott.net/play/live.php?mac=A0:BB:3E:02:40:2B&stream=798799&extension=m3u8', 'beIN Sports 5 HD (Server 2)', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/2Rha5aY.png" alt="beIN 5 (2)"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports 5 (2)</span>
+            <span class="channel-quality">1080p • Backup</span>
+          </div>
+        </div>
+
+        <div class="channel-item" onclick="playStream('https://main.light-ott.net/play/live.php?mac=A0:BB:3E:02:40:2B&stream=798800&extension=m3u8', 'beIN Sports 6 HD (Server 2)', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/0wBdLYb.png" alt="beIN 6 (2)"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports 6 (2)</span>
+            <span class="channel-quality">1080p • Backup</span>
+          </div>
+        </div>
+
+        <!-- FRANCE -->
+        <div class="section-divider">beIN Sports France</div>
+
+        <div class="channel-item" onclick="playStream('https://bold-sky-a86c.yusoff-rohaidee.workers.dev/?url=https://1nyaler.streamhostingcdn.top/stream/23/index.m3u8', 'beIN Sports France 1', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/tXqMkzA.png" alt="beIN Sports France 1"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports France 1</span>
+            <span class="channel-quality">1080p • French</span>
+          </div>
+        </div>
+
+        <div class="channel-item" onclick="playStream('https://bold-sky-a86c.yusoff-rohaidee.workers.dev/?url=https://1nyaler.streamhostingcdn.top/stream/14/index.m3u8', 'beIN Sports France 2', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/EG48QI7.png" alt="beIN Sports France 2"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports France 2</span>
+            <span class="channel-quality">1080p • French</span>
+          </div>
+        </div>
+
+        <div class="channel-item" onclick="playStream('https://bold-sky-a86c.yusoff-rohaidee.workers.dev/?url=https://1nyaler.streamhostingcdn.top/stream/74/index.m3u8', 'beIN Sports France 3', this)">
+          <div class="logo-box"><img src="https://i.imgur.com/YbzCxeF.png" alt="beIN Sports France 3"></div>
+          <div class="channel-details">
+            <span class="channel-name">beIN Sports France 3</span>
+            <span class="channel-quality">1080p • French</span>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- PLAYER CONTENT -->
+    <main class="content-area">
+      <div class="player-card">
+        <div class="video-wrapper">
+          <video id="videoPlayer" controls autoplay muted playsinline crossorigin="anonymous"></video>
+        </div>
+        <div class="player-info-bar">
+          <div class="info-left">
+            <div class="now-playing-badge"></div>
+            <h2 id="currentChannelName" class="channel-title-display">beIN Sports 1 HD</h2>
+          </div>
+          <div class="info-right">
+            <button id="recordBtn" class="record-btn" onclick="toggleRecording()">
+              <span class="record-dot"></span>
+              <span id="recordText">REC</span>
+            </button>
+            <span class="status-badge">CONNECTED</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 beIN SPORTS CONNECT by Sports Hub Official. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const video = document.getElementById('videoPlayer');
+    const channelNameElem = document.getElementById('currentChannelName');
+    const recordBtn = document.getElementById('recordBtn');
+    const recordText = document.getElementById('recordText');
+    
+    let hls = null;
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let isRecording = false;
+
+    function triggerAutoplay() {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          video.muted = true;
+          video.play();
+        });
+      }
+    }
+
+    function playStream(url, name, element) {
+      if (isRecording) {
+        stopRecording();
+      }
+
+      document.querySelectorAll('.channel-item').forEach(item => item.classList.remove('active'));
+      if (element) element.classList.add('active');
+
+      channelNameElem.textContent = name;
+
+      if (!url) {
+        alert("Pautan strim untuk saluran ini belum dimasukkan.");
+        return;
+      }
+
+      if (Hls.isSupported()) {
+        if (hls) {
+          hls.destroy();
+        }
+        hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+          triggerAutoplay();
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = url;
+        video.addEventListener('loadedmetadata', function () {
+          triggerAutoplay();
+        });
+      }
+    }
+
+    function toggleRecording() {
+      if (!isRecording) {
+        startRecording();
+      } else {
+        stopRecording();
+      }
+    }
+
+    function startRecording() {
+      try {
+        let stream = video.captureStream ? video.captureStream() : video.mozCaptureStream();
+        recordedChunks = [];
+        
+        let options = { mimeType: 'video/webm;codecs=vp9,opus' };
+        if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+          options = { mimeType: 'video/webm' };
+        }
+
+        mediaRecorder = new MediaRecorder(stream, options);
+
+        mediaRecorder.ondataavailable = function(event) {
+          if (event.data.size > 0) {
+            recordedChunks.push(event.data);
+          }
+        };
+
+        mediaRecorder.onstop = function() {
+          let blob = new Blob(recordedChunks, { type: 'video/webm' });
+          let url = URL.createObjectURL(blob);
+          let a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = url;
+          
+          let timestamp = new Date().toISOString().slice(0,19).replace(/[:T]/g, "-");
+          let channelName = channelNameElem.textContent.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+          a.download = `${channelName}_${timestamp}.webm`;
+          
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(() => {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+          }, 100);
+        };
+
+        mediaRecorder.start();
+        isRecording = true;
+        recordBtn.classList.add('recording');
+        recordText.textContent = 'STOP';
+      } catch (e) {
+        alert("Gagal merakam siaran. Sesetengah penyemak imbas menyekat rakaman kerana isu CORS/Keselamatan.");
+        console.error(e);
+      }
+    }
+
+    function stopRecording() {
+      if (mediaRecorder && isRecording) {
+        mediaRecorder.stop();
+        isRecording = false;
+        recordBtn.classList.remove('recording');
+        recordText.textContent = 'REC';
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const firstItem = document.querySelector('.channel-item');
+      if (firstItem) {
+        firstItem.click();
+      }
+    });
+  </script>
+</body>
+</html>
